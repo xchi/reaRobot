@@ -18,33 +18,26 @@ class robot(var coordinateX:Int, var coordinateY:Int, var direction:Direction.Va
       case Direction.South=>coordinateY=coordinateY+1
       case Direction.West=>coordinateY=coordinateY+1
     }
-
     directionMatch(direction)
-
   }
 
   def turn(turn:Turn.Value):Unit={
     def turnMatch(t:Turn.Value)=t match{
-      case Turn.Left=>direction=Direction(direction.id+1)
-      case Turn.Right=>direction=Direction(direction.id-1)
+      case Turn.Left=>direction=if(direction.id==0) Direction(3) else Direction(direction.id+1)
+      case Turn.Right=>direction=if(direction.id==3) Direction(0) else  Direction(direction.id-1)
     }
     turnMatch(turn)
   }
 
   def printResult():Unit={
     println(coordinateX+","+coordinateY+","+direction)
-
   }
-
 }
-
-
 
 
 object reaRobot {
   def main(args: Array[String]): Unit = {
-
-    var robot=new robot(2,3,Direction.South)
+    var robot=new robot(2,3,Direction.West)
     robot.move()
     robot.turn(Turn.Right)
     robot.printResult()
